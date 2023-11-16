@@ -1,7 +1,20 @@
+- community.general.jenkins_job_info:
+    name: "{{item.job_name}}"
+    user: admin
+    password: admin123
+    url: http://172.31.84.176:8080
+  register: my_jenkins_job_info
+
+- name: Print return information from the previous task
+  ansible.builtin.debug:
+    var: my_jenkins_job_info
+
+
 - name: copy xml file
   ansible.builtin.template:
     src: sjob.xml
     dest: /tmp/test.xml
+
 
 - name: Create jenkins jobs
   community.general.jenkins_job:
