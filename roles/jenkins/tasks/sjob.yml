@@ -7,16 +7,11 @@
   register: jenkins_job_status
   ignore_errors: true
 
-- name: Print return information from the previous task
-  ansible.builtin.debug:
-    msg: "{{ jenkins_job_status }}"
-
-
 - name: copy xml file
   ansible.builtin.template:
     src: sjob.xml
     dest: /tmp/test.xml
-
+  when: jenkins_job_status: failed
 
 - name: Create jenkins jobs
   community.general.jenkins_job:
@@ -25,3 +20,4 @@
     password: admin123
     url: http://172.31.84.176:8080
     user: admin
+  when: jenkins_job_status: failed
