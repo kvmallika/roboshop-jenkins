@@ -8,14 +8,10 @@ def call(){
         options {
             ansiColor('xterm')
         }
-        parameters {
-            choice(name: 'env', choices: ['dev', 'prod'], description: 'Pick environment')
-        }
-
         stages {
             stage('Code Quality') {
                 steps {
-                    sh 'sonar-scanner -Dsonar.projectkey=${component} -Dsonar.host.url=http://172.31.47.250:9000'
+                    sh 'sonar-scanner -Dsonar.projectkey=${component} -Dsonar.host.url=http://172.31.47.250:9000 -Dsonar.login=admin -Dsonar.password=admin123'
                 }
             }
             stage('Unit test cases') {
