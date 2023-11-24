@@ -8,9 +8,6 @@ def call(){
         options {
             ansiColor('xterm')
         }
-        parameters {
-            choice(name: 'env', choices: ['dev', 'prod'], description: 'Pick environment')
-        }
 
         stages {
             stage('Code Quality') {
