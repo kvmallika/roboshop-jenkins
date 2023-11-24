@@ -27,7 +27,7 @@ def call(){
             }
             stage('CheckMarx SCA Scan') {
                 steps {
-                    sh 'CheckMarx SCA Scan'
+                    sh ' echo CheckMarx SCA Scan'
                 }
             }
         }
