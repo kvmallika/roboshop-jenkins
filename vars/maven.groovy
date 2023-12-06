@@ -38,6 +38,19 @@ def call(){
                     sh 'echo CheckMarx SCA Scan'
                 }
             }
+            stage('Release Application') {
+                when {
+                    expression {
+                        env.TAG_NAME ==~ ".*"
+                    }
+                }
+                steps {
+                    sh 'mvn package ; cp target/${component}-1.0.jar ${component}.jar'
+                    sh 'echo ${TAG_NAME} >VERSION'
+                    sh 'zip -r ${component}-${TAG_NAME}.zip ${component}.jar VERSION'
+                    sh 'curl -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${component}-${TAG_NAME}.zip http://172.31.32.14:8081/repository/${component}/${component}-${TAG_NAME}.zip'
+                }
+            }
         }
         post {
             always {
