@@ -8,6 +8,9 @@ def call(){
         options {
             ansiColor('xterm')
         }
+        environment {
+            NEXUS = credentials('NEXUS')
+        }
         stages {
             stage('Code Quality') {
                 steps {
@@ -43,7 +46,7 @@ def call(){
                     sh 'zip -r ${component}-${TAG_NAME}.zip *'
                     // deleting this file as it is not needed
                     sh 'zip -d ${component}-${TAG_NAME}.zip Jenkinsfile'
-                    sh 'curl -v -u admin:admin123 --upload-file ${component}-${TAG_NAME}.zip http://172.31.32.14:8081/repository/${component}/${component}-${TAG_NAME}.zip'
+                    sh 'curl -f -v -u admin:admin123 --upload-file ${component}-${TAG_NAME}.zip http://172.31.32.14:8081/repository/${component}/${component}-${TAG_NAME}.zip'
                 }
             }
         }
